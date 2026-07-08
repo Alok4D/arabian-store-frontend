@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { Hind_Siliguri } from 'next/font/google';
 import { Toaster } from '@/components/ui/sonner';
-import './globals.css';
+import '../globals.css';
 
 const hindSiliguri = Hind_Siliguri({ 
   weight: ['300', '400', '500', '600', '700'],

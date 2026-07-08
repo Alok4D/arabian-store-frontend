@@ -61,12 +61,16 @@ export default function CheckoutPage() {
   };
 
   const products = [
-    { id: '1kg', name: 'সুপার প্রিমিয়াম সুক্কারি রুতাব- ১ কেজি × 1', originalPrice: '1,240.00৳', price: '1,190.00৳' },
-    { id: '3kg', name: 'সুপার প্রিমিয়াম সুক্কারি রুতাব- ৩ কেজি × 1', originalPrice: '3,600.00৳', price: '3,300.00৳', tag: '৩০০৳ ছাড়' },
-    { id: '2kg', name: 'সুপার প্রিমিয়াম সুক্কারি রুতাব- ২ কেজি × 1', originalPrice: '2,500.00৳', price: '2,290.00৳' },
-    { id: 'combo1', name: '১ কেজি প্রিমিয়াম সুক্কারি রুতাব ও ৩০০ গ্রাম তাহিনা কম্বো × 1', originalPrice: '2,030.00৳', price: '1,790.00৳' },
-    { id: 'combo2', name: '১ কেজি প্রিমিয়াম সুক্কারি রুতাব ও ২৫০ গ্রাম এরাবিয়ান গাহওয়া কম্বো × 1', originalPrice: '2,440.00৳', price: '2,190.00৳' },
+    { id: '1kg', name: '১ কেজি মিশরীয় মেডজুল খেজুর × 1', price: '1,650.00৳' },
+    { id: '2kg', name: '২ কেজি মিশরীয় মেডজুল খেজুর × 1', price: '3,200.00৳' },
+    { id: '3kg', name: '৩ কেজি মিশরীয় মেডজুল খেজুর × 1', price: '4,500.00৳' },
+    { id: '5kg', name: '৫ কেজি মিশরীয় মেডজুল খেজুর × 1', price: '7,500.00৳', tag: 'বেস্ট সেলার' },
   ];
+
+  const selectedProductData = products.find(p => p.id === selectedProduct) || products[0];
+  const selectedProductPrice = parseInt(selectedProductData.price.replace(/,/g, ''));
+  const deliveryCharge = 130;
+  const totalPrice = selectedProductPrice + deliveryCharge;
 
   if (isOrderPlaced) {
     return (
@@ -107,31 +111,31 @@ export default function CheckoutPage() {
                   <div className="w-full md:w-3/4">
                     {/* Placeholder for the combo product image */}
                     <div className="w-full max-w-[280px] aspect-[4/3] bg-neutral-100 rounded-md mb-4 flex items-center justify-center text-neutral-400 text-sm overflow-hidden border border-neutral-200">
-                      <img src="/sukkari.webp" alt="Product" className="w-full h-full object-cover opacity-80" />
+                      <img src="/banner-img/product-banner.webp" alt="Product" className="w-full h-full object-cover opacity-80" />
                     </div>
-                    <p className="text-[13px] text-[#2b6cb0] font-medium hover:underline cursor-pointer">
-                      {products.find(p => p.id === selectedProduct)?.name}
+                    <p className="text-[14px] md:text-[16px] text-[#2b6cb0] font-bold hover:underline cursor-pointer">
+                      {selectedProductData.name}
                     </p>
                   </div>
-                  <div className="w-full md:w-1/4 text-left md:text-right text-[13px] text-neutral-600 mt-1 md:mt-0 font-medium">
-                    {products.find(p => p.id === selectedProduct)?.price}
+                  <div className="w-full md:w-1/4 text-left md:text-right text-[14px] md:text-[16px] text-neutral-800 mt-1 md:mt-0 font-bold">
+                    {selectedProductData.price}
                   </div>
                 </div>
 
                 {/* Totals */}
-                <div className="space-y-3.5 text-[13px]">
+                <div className="space-y-3.5 text-[14px]">
                   <div className="flex justify-between items-center">
                     <span className="text-neutral-500 font-medium">Subtotal:</span>
-                    <span className="text-neutral-700 font-medium">{products.find(p => p.id === selectedProduct)?.price}</span>
+                    <span className="text-neutral-700 font-bold">{selectedProductData.price}</span>
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-neutral-500 font-medium">Shipping:</span>
-                    <span className="text-neutral-700 font-medium">130.00৳ <span className="text-[11px] text-neutral-400 ml-1 font-normal">via ডেলিভারি চার্জ</span></span>
+                    <span className="text-neutral-700 font-bold">130.00৳ <span className="text-[11px] text-neutral-400 ml-1 font-normal">via ডেলিভারি চার্জ</span></span>
                   </div>
                   <div className="flex justify-between items-center border-t border-neutral-200 pt-4 mt-2">
                     <span className="text-neutral-500 font-bold">Total:</span>
-                    <span className="font-bold text-neutral-800 text-[15px]">
-                      {parseInt(products.find(p => p.id === selectedProduct)?.price.replace(/,/g, '') || '0') + 130}.00৳
+                    <span className="font-bold text-neutral-900 text-[16px] md:text-[18px]">
+                      {totalPrice.toLocaleString()}.00৳
                     </span>
                   </div>
                 </div>
@@ -236,37 +240,38 @@ export default function CheckoutPage() {
 
         {/* Your Products Section */}
         <div className="mb-12">
-          <h2 className="text-[22px] font-bold text-neutral-800 mb-5">Your Products</h2>
-          <div className="border border-neutral-200 rounded-sm bg-white">
+          <h2 className="text-[22px] md:text-[28px] font-bold text-neutral-800 mb-6 text-center md:text-left">প্যাকেজ নির্বাচন করুন</h2>
+          <div className="border border-neutral-200 rounded-md bg-white overflow-hidden shadow-sm">
             {products.map((product, index) => {
               const isSelected = selectedProduct === product.id;
               return (
                 <div 
                   key={product.id} 
                   onClick={() => setSelectedProduct(product.id)}
-                  className={`relative flex items-center gap-3 md:gap-4 p-3 md:p-4 cursor-pointer transition-all ${
-                    isSelected ? 'bg-[#fff6f3] outline outline-1 outline-[#e35a34] z-10' : 'hover:bg-neutral-50'
+                  className={`relative flex items-center gap-4 p-4 md:p-5 cursor-pointer transition-all ${
+                    isSelected ? 'bg-[#f4fbf6] outline outline-2 outline-[#009e19] z-10' : 'hover:bg-neutral-50'
                   } ${index !== products.length - 1 ? 'border-b border-neutral-200' : ''}`}
                 >
-                  {isSelected && product.tag && (
-                    <div className="absolute top-0 right-0 bg-[#e35a34] text-white text-[11px] font-bold px-2 py-0.5">
+                  {product.tag && (
+                    <div className={`absolute top-0 right-0 text-[11px] font-bold px-3 py-1 rounded-bl-md ${isSelected ? 'bg-[#009e19] text-white' : 'bg-neutral-200 text-neutral-600'}`}>
                       {product.tag}
                     </div>
                   )}
-                  <div className="flex items-center justify-center ml-1">
-                    <div className={`w-[18px] h-[18px] rounded-full border flex items-center justify-center ${isSelected ? 'border-[#e35a34]' : 'border-neutral-300'}`}>
-                      {isSelected && <div className="w-[10px] h-[10px] rounded-full bg-[#e35a34]" />}
+                  <div className="flex items-center justify-center">
+                    <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${isSelected ? 'border-[#009e19]' : 'border-neutral-300'}`}>
+                      {isSelected && <div className="w-2.5 h-2.5 rounded-full bg-[#009e19]" />}
                     </div>
                   </div>
-                  <div className="w-10 h-10 md:w-12 md:h-12 flex-shrink-0 bg-white rounded flex items-center justify-center overflow-hidden border border-neutral-100">
+                  <div className="w-12 h-12 md:w-16 md:h-16 flex-shrink-0 bg-white rounded-md flex items-center justify-center overflow-hidden border border-neutral-100 shadow-sm">
                     <img src="/banner-img/product-banner.webp" alt="Product" className="w-full h-full object-cover" />
                   </div>
-                  <div className="flex-1 text-[13px] md:text-[15px] font-medium text-neutral-700 leading-snug">
-                    {product.name}
+                  <div className="flex-1">
+                    <div className={`text-[18px] md:text-[22px] font-bold leading-snug ${isSelected ? 'text-[#009e19]' : 'text-neutral-800'}`}>
+                      {product.name}
+                    </div>
                   </div>
-                  <div className="text-right text-[13px] md:text-[15px]">
-                    <span className="text-neutral-400 line-through text-[11px] md:text-xs mr-1 md:mr-2">{product.originalPrice}</span>
-                    <span className="font-bold text-neutral-800">{product.price}</span>
+                  <div className="text-right">
+                    <span className="font-extrabold text-[18px] md:text-[24px] text-neutral-900">{product.price}</span>
                   </div>
                 </div>
               );
@@ -274,98 +279,79 @@ export default function CheckoutPage() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 gap-12 lg:grid-cols-12">
+        <div className="grid grid-cols-1 gap-12 lg:grid-cols-12" id="order">
           
           {/* LEFT COLUMN: Billing & Shipping */}
           <div className="lg:col-span-7 space-y-8">
             <div>
               <h2 className="text-2xl font-bold tracking-tight mb-6 text-neutral-900">
-                Billing details
+                ডেলিভারি বিস্তারিত
               </h2>
               
-              <div className="space-y-5">
+              <div className="space-y-5 bg-[#fdfdfd] p-5 md:p-6 rounded-md border border-neutral-200 shadow-sm">
                 {/* Full Name */}
                 <div>
-                  <label className="block text-sm font-medium mb-1.5 text-neutral-800">
+                  <label className="block text-[15px] font-bold mb-1.5 text-neutral-800">
                     পূর্ণ নাম <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="text"
                     value={fullName}
                     onChange={(e) => setFullName(e.target.value)}
-                    className="w-full rounded-md border border-neutral-300 px-3 py-2.5 text-base outline-none focus:border-neutral-500 transition-colors"
+                    placeholder="আপনার নাম লিখুন"
+                    className="w-full rounded-md border border-neutral-300 px-4 py-3 text-[15px] outline-none focus:border-[#009e19] focus:ring-1 focus:ring-[#009e19] transition-all bg-white"
                   />
                 </div>
 
                 {/* Mobile Number */}
                 <div>
-                  <label className="block text-sm font-medium mb-1.5 text-neutral-800">
+                  <label className="block text-[15px] font-bold mb-1.5 text-neutral-800">
                     মোবাইল নাম্বার <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="tel"
                     value={mobileNumber}
                     onChange={(e) => setMobileNumber(e.target.value)}
-                    className="w-full rounded-md border border-neutral-300 px-3 py-2.5 text-base outline-none focus:border-neutral-500 transition-colors"
+                    placeholder="আপনার ১১ ডিজিটের মোবাইল নাম্বার"
+                    className="w-full rounded-md border border-neutral-300 px-4 py-3 text-[15px] outline-none focus:border-[#009e19] focus:ring-1 focus:ring-[#009e19] transition-all bg-white"
                   />
                 </div>
 
                 {/* WhatsApp Number */}
                 <div>
-                  <label className="block text-sm font-medium mb-1.5 text-neutral-800">
-                    প্রবাস থেকে অর্ডার করতে হোয়াটসঅ্যাপ নাম্বার লিখুন
+                  <label className="block text-[15px] font-bold mb-1.5 text-neutral-800">
+                    হোয়াটসঅ্যাপ নাম্বার (ঐচ্ছিক)
                   </label>
                   <input
                     type="text"
                     value={whatsappNumber}
                     onChange={(e) => setWhatsappNumber(e.target.value)}
-                    placeholder="হোয়াটসঅ্যাপ নাম্বার লিখুন"
-                    className="w-full rounded-md border border-neutral-300 px-3 py-2.5 text-base outline-none focus:border-neutral-500 transition-colors placeholder-neutral-400"
+                    placeholder="প্রবাসীদের জন্য প্রযোজ্য"
+                    className="w-full rounded-md border border-neutral-300 px-4 py-3 text-[15px] outline-none focus:border-[#009e19] focus:ring-1 focus:ring-[#009e19] transition-all bg-white"
                   />
-                </div>
-
-                {/* District Dropdown */}
-                <div>
-                  <label className="block text-sm font-medium mb-1.5 text-neutral-800">
-                    জেলা (optional)
-                  </label>
-                  <div className="relative">
-                    <select
-                      value={district}
-                      onChange={(e) => setDistrict(e.target.value)}
-                      className="w-full appearance-none rounded-md border border-neutral-300 px-3 py-2.5 text-base outline-none focus:border-neutral-500 transition-colors bg-white pr-10 text-neutral-700"
-                    >
-                      <option value="Sherpur">Sherpur</option>
-                      <option value="Dhaka">Dhaka</option>
-                      <option value="Chittagong">Chittagong</option>
-                    </select>
-                    <ChevronDown className="absolute right-3 top-1/2 h-5 w-5 -translate-y-1/2 text-neutral-500 pointer-events-none" />
-                  </div>
                 </div>
 
                 {/* Full Address */}
                 <div>
-                  <label className="block text-sm font-medium mb-1.5 text-neutral-800">
+                  <label className="block text-[15px] font-bold mb-1.5 text-neutral-800">
                     পূর্ণ ঠিকানা <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="text"
                     value={fullAddress}
                     onChange={(e) => setFullAddress(e.target.value)}
-                    className="w-full rounded-md border border-neutral-300 px-3 py-2.5 text-base outline-none focus:border-neutral-500 transition-colors"
+                    placeholder="গ্রাম/এলাকা, থানা, জেলা"
+                    className="w-full rounded-md border border-neutral-300 px-4 py-3 text-[15px] outline-none focus:border-[#009e19] focus:ring-1 focus:ring-[#009e19] transition-all bg-white"
                   />
                 </div>
               </div>
             </div>
 
             {/* Shipping Section */}
-            <div className="pt-4">
-              <h2 className="text-2xl font-bold tracking-tight mb-4 text-neutral-900">
-                Shipping
-              </h2>
-              <div className="flex justify-between items-center w-full rounded-md border border-neutral-200 p-4 text-base font-medium text-neutral-800 bg-neutral-50/30">
+            <div>
+              <div className="flex justify-between items-center w-full rounded-md border border-[#c3e6cb] p-4 text-[16px] font-bold text-[#155724] bg-[#d4edda] shadow-sm">
                 <span>ডেলিভারি চার্জ:</span>
-                <span>130.00৳</span>
+                <span>{deliveryCharge.toLocaleString()}.00৳</span>
               </div>
             </div>
           </div>
@@ -373,40 +359,36 @@ export default function CheckoutPage() {
           {/* RIGHT COLUMN: Your Order Details */}
           <div className="lg:col-span-5">
             <h2 className="text-2xl font-bold tracking-tight mb-6 text-neutral-900">
-              Your order
+              অর্ডার সামারি
             </h2>
 
-            <div className="border border-neutral-100 rounded-lg p-1">
+            <div className="border border-neutral-200 rounded-lg p-1 bg-white shadow-sm">
               {/* Product Table Header */}
-              <div className="flex justify-between text-base font-bold pb-3 border-b border-dashed border-neutral-200 px-2">
+              <div className="flex justify-between text-base font-bold pb-3 pt-2 border-b border-dashed border-neutral-200 px-3">
                 <span className="text-neutral-600">Product</span>
                 <span className="text-neutral-600">Subtotal</span>
               </div>
 
               {/* Product Item Row */}
-              <div className="py-4 border-b border-dashed border-neutral-200 px-2">
-                <div className="flex items-start gap-3">
-                  {/* Product Image Placeholder */}
-                  <div className="h-16 w-16 flex-shrink-0 bg-neutral-100 rounded overflow-hidden border border-neutral-200 flex items-center justify-center relative">
-                    <span className="text-xs text-neutral-400">Image</span>
+              <div className="py-4 border-b border-dashed border-neutral-200 px-3">
+                <div className="flex items-start gap-4">
+                  {/* Product Image */}
+                  <div className="h-16 w-16 flex-shrink-0 bg-white rounded overflow-hidden border border-neutral-200 flex items-center justify-center p-1">
+                    <img src="/banner-img/product-banner.webp" alt="Product" className="w-full h-full object-contain" />
                   </div>
                   
                   {/* Product Details & Internal Pricing Breakdown */}
                   <div className="flex-1 flex justify-between items-start gap-4">
                     <div className="space-y-1">
-                      <p className="text-sm font-medium text-neutral-800 leading-tight">
-                        সুপার প্রিমিয়াম সুক্কারি রুতাব- ৩ কেজি
+                      <p className="text-[15px] font-bold text-neutral-800 leading-tight">
+                        {selectedProductData.name.split(' ×')[0]}
                       </p>
-                      <p className="text-xs text-neutral-500 font-semibold">1</p>
+                      <p className="text-[13px] text-neutral-500 font-bold">Qty: 1</p>
                     </div>
                     
-                    <div className="text-right flex items-center gap-4">
-                      <div className="text-sm text-right">
-                        <span className="block text-neutral-400 line-through text-xs">3,600.00৳</span>
-                        <span className="block bg-yellow-100 px-1 font-medium rounded text-neutral-800">3,300.00৳</span>
-                      </div>
-                      <span className="text-base font-medium text-neutral-800 self-center">
-                        3,300.00৳
+                    <div className="text-right">
+                      <span className="text-[16px] font-bold text-neutral-900">
+                        {selectedProductData.price}
                       </span>
                     </div>
                   </div>
@@ -414,19 +396,24 @@ export default function CheckoutPage() {
               </div>
 
               {/* Summary Rows */}
-              <div className="space-y-3 py-4 border-b border-dashed border-neutral-200 px-2 text-base">
-                <div className="flex justify-between items-start">
-                  <span className="text-neutral-800 font-medium">Subtotal</span>
+              <div className="space-y-3 py-4 border-b border-dashed border-neutral-200 px-3 text-[15px]">
+                <div className="flex justify-between items-center">
+                  <span className="text-neutral-600 font-bold">Subtotal</span>
                   <div className="text-right">
-                    <span className="block font-medium text-neutral-800">3,300.00৳</span>
-                    <span className="block text-xs text-neutral-500 font-medium mt-0.5">Save: 300.00৳</span>
+                    <span className="block font-bold text-neutral-900">{selectedProductData.price}</span>
+                  </div>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-neutral-600 font-bold">Shipping</span>
+                  <div className="text-right">
+                    <span className="block font-bold text-neutral-900">{deliveryCharge.toLocaleString()}.00৳</span>
                   </div>
                 </div>
               </div>
 
-              <div className="flex justify-between items-center py-4 px-2 text-lg font-bold text-neutral-900">
+              <div className="flex justify-between items-center py-4 px-3 text-[20px] font-bold text-neutral-900 bg-[#f4fbf6] rounded-b-lg">
                 <span>Total</span>
-                <span>3,430.00৳</span>
+                <span className="text-[#009e19]">{totalPrice.toLocaleString()}.00৳</span>
               </div>
 
               {/* Payment Methods Section */}

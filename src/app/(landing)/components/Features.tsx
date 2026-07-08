@@ -8,16 +8,15 @@ export function Features() {
       {/* Features List 1 */}
       <div>
         <h2 className="text-[26px] font-extrabold text-[#b86b11] mb-6">
-          সুক্কারি রোতাব খেজুরের বৈশিষ্ট্য!
+          মিশরীয় মেডজুল দেখতে কেমন?
         </h2>
         <ul className="space-y-4">
           {[
-            'গাছপাকা ও রসালো খেজুর।',
-            'মধুর মতো মিষ্টি।',
-            'হাতের চাপেই গলে যায়।',
-            'মুখে দিলে মিলিয়ে যায়।',
-            'শিশু ও বৃদ্ধদের জন্য খুবই উপযোগী।',
-            'কাঁচা কাঁচা ফ্লেভার পাওয়া যায়।'
+            'আকারে সাধারণ খেজুরের তুলনায় অনেক বড়',
+            'গাঢ় বাদামি থেকে হালকা অ্যাম্বার রঙ',
+            'মোটা ও মাংসল শাঁস',
+            'নরম, কোমল ও রসাল টেক্সচার',
+            'প্রাকৃতিক উজ্জ্বলতা'
           ].map((item, idx) => (
             <li key={idx} className="flex items-center gap-3">
               <div className="w-[18px] h-[18px] shrink-0 bg-[#00a82d] text-white rounded-full flex items-center justify-center">
@@ -32,15 +31,15 @@ export function Features() {
       {/* Features List 2 */}
       <div>
         <h2 className="text-[26px] font-extrabold text-[#b86b11] mb-6">
-          আমাদের রোতাব কেন সেরা?
+          কেন প্রতিদিন মেডজুল খেতে পারেন?
         </h2>
         <ul className="space-y-4">
           {[
-            'প্রতিটি খেজুর বেছে বেছে প্যাকেজিং করা হয়।',
-            'বড় সাইজ।',
-            'পছন্দ না হলে রিটার্ন গ্যারান্টি।',
-            'প্রিমিয়াম ও মজবুত প্যাকেজিং।',
-            'প্রোডাক্ট দেখে রিসিভ করার সুযোগ।'
+            'দ্রুত শক্তি পেতে সহায়তা করতে পারে',
+            'ফাইবার থাকায় হজমে সহায়ক হতে পারে',
+            'পটাশিয়াম শরীরের স্বাভাবিক পেশী ও স্নায়ুর কার্যক্রমে ভূমিকা রাখে',
+            'অ্যান্টিঅক্সিডেন্ট কোষকে অক্সিডেটিভ ক্ষতি থেকে সুরক্ষায় সাহায্য করে',
+            'ব্যস্ত জীবনে স্বাস্থ্যকর স্ন্যাকসের একটি ভালো বিকল্প'
           ].map((item, idx) => (
             <li key={idx} className="flex items-center gap-3">
               <div className="w-[18px] h-[18px] shrink-0 bg-[#00a82d] text-white rounded-full flex items-center justify-center">

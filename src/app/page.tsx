@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import styles from './page.module.css';
 
 const packages = [
@@ -42,20 +43,32 @@ export default function Home() {
     <main className={styles.main}>
       {/* Hero Section */}
       <section className={styles.hero}>
-        <div className={styles.heroContent}>
-          <p className={styles.heroSubtitle}>খেজুর বাড়ি</p>
-          <h1 className={styles.heroTitle}>মিশরীয় মেডজুল খেজুর</h1>
-          <p className={styles.heroDesc}>
-            খেজুরের জগতে এক রাজকীয় অভিজ্ঞতা! আপনি যদি এমন একটি খেজুর খুঁজে থাকেন যা দেখতে যেমন আকর্ষণীয়, খেতেও তেমনি অসাধারণ—তাহলে মিশরীয় মেডজুল হতে পারে আপনার জন্য সেরা পছন্দ।
-          </p>
-          <div className={styles.heroTags}>
-            <span className={styles.tag}>প্রিমিয়াম কোয়ালিটি</span>
-            <span className={styles.tag}>নরম শাঁস</span>
-            <span className={styles.tag}>প্রাকৃতিক মিষ্টতা</span>
+        <div className={styles.heroContainer}>
+          <div className={styles.heroContent}>
+            <p className={styles.heroSubtitle}>খেজুর বাড়ি</p>
+            <h1 className={styles.heroTitle}>মিশরীয় মেডজুল খেজুর</h1>
+            <p className={styles.heroDesc}>
+              খেজুরের জগতে এক রাজকীয় অভিজ্ঞতা! আপনি যদি এমন একটি খেজুর খুঁজে থাকেন যা দেখতে যেমন আকর্ষণীয়, খেতেও তেমনি অসাধারণ—তাহলে মিশরীয় মেডজুল হতে পারে আপনার জন্য সেরা পছন্দ।
+            </p>
+            <div className={styles.heroTags}>
+              <span className={styles.tag}>প্রিমিয়াম কোয়ালিটি</span>
+              <span className={styles.tag}>নরম শাঁস</span>
+              <span className={styles.tag}>প্রাকৃতিক মিষ্টতা</span>
+            </div>
+            <a href="#order" className={`btn btn-primary ${styles.submitBtn}`} style={{ display: 'inline-block', width: 'auto' }}>
+              এখনই অর্ডার করুন
+            </a>
           </div>
-          <a href="#order" className={`btn btn-primary ${styles.submitBtn}`} style={{ display: 'inline-block', width: 'auto' }}>
-            এখনই অর্ডার করুন
-          </a>
+          <div className={styles.heroImageWrapper}>
+            <Image 
+              src="/medjool-dates.png" 
+              alt="Premium Egyptian Medjool Dates" 
+              width={500} 
+              height={500} 
+              className={styles.heroImage}
+              priority
+            />
+          </div>
         </div>
       </section>
 

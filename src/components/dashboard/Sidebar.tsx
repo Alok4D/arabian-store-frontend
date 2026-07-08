@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
+import Cookies from 'js-cookie';
 import { 
   LayoutDashboard, 
   ShoppingCart, 
@@ -18,6 +19,13 @@ interface SidebarProps {
 
 export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
   const pathname = usePathname();
+  const router = useRouter();
+
+  const handleLogout = () => {
+    Cookies.remove('admin_token');
+    router.push('/login');
+    router.refresh();
+  };
 
   const navItems = [
     { name: 'Dashboard', href: '/admin', icon: LayoutDashboard },
@@ -90,7 +98,10 @@ export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
               <p className="text-xs text-slate-400 truncate">admin@arabianstore.com</p>
             </div>
           </div>
-          <button className="flex items-center gap-3 px-4 py-3 w-full text-slate-300 hover:text-white hover:bg-[#1e293b] rounded-lg transition-colors mt-2">
+          <button 
+            onClick={handleLogout}
+            className="flex items-center gap-3 px-4 py-3 w-full text-slate-300 hover:text-white hover:bg-[#1e293b] rounded-lg transition-colors mt-2"
+          >
             <LogOut className="w-5 h-5" />
             <span className="font-medium">Log out</span>
           </button>

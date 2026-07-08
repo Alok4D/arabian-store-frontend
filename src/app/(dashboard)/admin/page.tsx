@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { Package, RefreshCw, Phone, MapPin, TrendingUp, ShoppingBag, Users, Activity } from 'lucide-react';
+import Cookies from 'js-cookie';
 
 export default function AdminDashboard() {
   const [orders, setOrders] = useState<any[]>([]);
@@ -10,8 +11,13 @@ export default function AdminDashboard() {
   const fetchOrders = async () => {
     setIsLoading(true);
     try {
+      const token = Cookies.get('admin_token');
       const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
-      const res = await fetch(`${apiUrl}/orders`);
+      const res = await fetch(`${apiUrl}/orders`, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
       const data = await res.json();
       if (data.success) {
         setOrders(data.orders);

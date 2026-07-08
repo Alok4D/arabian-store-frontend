@@ -56,8 +56,10 @@ export function Footer() {
             <div className="flex justify-center md:justify-end">
               <div className="w-full max-w-[340px] h-32 bg-white rounded-lg shadow-sm border border-neutral-200 overflow-hidden flex flex-col relative">
                  {/* Fake FB Banner */}
-                 <div className="h-20 bg-[#1e4a28] w-full flex items-center justify-center text-white/50 text-xs bg-[url('/702625471_1452288243581247_6964213978760610794_n.png')] bg-cover bg-center">
-                   <div className="absolute top-2 right-2 text-white bg-blue-600 rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold">f</div>
+                 <div 
+                   className="h-20 bg-[#1e4a28] w-full flex items-center justify-center text-white/50 text-xs bg-cover bg-center"
+                   style={{ backgroundImage: "url('/702625471_1452288243581247_6964213978760610794_n.png')" }}
+                 >
                  </div>
                  {/* Fake FB Page Info */}
                  <div className="h-12 bg-white flex items-center px-4 gap-3 relative">

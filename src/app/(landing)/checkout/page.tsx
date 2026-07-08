@@ -1,13 +1,16 @@
 "use client";
 
 import { useState } from 'react';
-import { Lock, ChevronDown, Square } from 'lucide-react';
+import { Lock, Square } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 export default function CheckoutPage() {
   const router = useRouter();
   const [showLogin, setShowLogin] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState('3kg');
+  const [quantities, setQuantities] = useState<Record<string, number>>({
+    '1kg': 1, '2kg': 1, '3kg': 1, '5kg': 1
+  });
   const [isLoading, setIsLoading] = useState(false);
 
   // Form State
@@ -39,13 +42,14 @@ export default function CheckoutPage() {
           district,
           fullAddress,
           packageType: selectedProduct,
-          paymentMethod
+          paymentMethod,
+          quantity: quantities[selectedProduct] || 1
         })
       });
 
       const data = await res.json();
       if (data.success) {
-        router.push(`/checkout/success?orderId=${data.order.id.slice(0, 8)}&method=${paymentMethod}&product=${selectedProduct}`);
+        router.push(`/checkout/success?orderId=${data.order.id.slice(0, 8)}&method=${paymentMethod}&product=${selectedProduct}&qty=${quantities[selectedProduct] || 1}`);
       } else {
         setErrorMessage(data.message || 'অর্ডার করতে সমস্যা হয়েছে, আবার চেষ্টা করুন।');
       }
@@ -66,8 +70,16 @@ export default function CheckoutPage() {
 
   const selectedProductData = products.find(p => p.id === selectedProduct) || products[0];
   const selectedProductPrice = parseInt(selectedProductData.price.replace(/,/g, ''));
+  const selectedProductQuantity = quantities[selectedProduct] || 1;
   const deliveryCharge = 130;
-  const totalPrice = selectedProductPrice + deliveryCharge;
+  const totalPrice = (selectedProductPrice * selectedProductQuantity) + deliveryCharge;
+
+  const handleQuantityChange = (id: string, delta: number) => {
+    setQuantities(prev => ({
+      ...prev,
+      [id]: Math.max(1, (prev[id] || 1) + delta)
+    }));
+  };
 
   return (
     <div className="px-4 py-8 md:px-12 lg:px-24 text-[#222222]">
@@ -135,38 +147,55 @@ export default function CheckoutPage() {
 
         {/* Your Products Section */}
         <div className="mb-12">
-          <h2 className="text-[22px] md:text-[28px] font-bold text-neutral-800 mb-6 text-center md:text-left">প্যাকেজ নির্বাচন করুন</h2>
-          <div className="border border-neutral-200 rounded-md bg-white overflow-hidden shadow-sm">
+          <h2 className="text-[20px] md:text-[24px] font-bold text-neutral-800 mb-6 text-left">Your Products</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {products.map((product, index) => {
               const isSelected = selectedProduct === product.id;
               return (
                 <div 
                   key={product.id} 
                   onClick={() => setSelectedProduct(product.id)}
-                  className={`relative flex items-center gap-4 p-4 md:p-5 cursor-pointer transition-all ${
-                    isSelected ? 'bg-[#f4fbf6] outline outline-2 outline-[#009e19] z-10' : 'hover:bg-neutral-50'
-                  } ${index !== products.length - 1 ? 'border-b border-neutral-200' : ''}`}
+                  className={`relative flex items-start gap-3 md:gap-4 p-4 md:p-5 cursor-pointer transition-all bg-white border rounded-md overflow-hidden ${
+                    isSelected ? 'border-purple-400 shadow-sm' : 'border-neutral-300'
+                  }`}
                 >
-                  {product.tag && (
-                    <div className={`absolute top-0 right-0 text-[11px] font-bold px-3 py-1 rounded-bl-md ${isSelected ? 'bg-[#009e19] text-white' : 'bg-neutral-200 text-neutral-600'}`}>
-                      {product.tag}
-                    </div>
-                  )}
-                  <div className="flex items-center justify-center">
-                    <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${isSelected ? 'border-[#009e19]' : 'border-neutral-300'}`}>
-                      {isSelected && <div className="w-2.5 h-2.5 rounded-full bg-[#009e19]" />}
+                  {/* Delivery Free Ribbon */}
+                  <div className="absolute -right-[30px] top-[14px] w-[120px] transform rotate-45 bg-[#f05924] text-white text-[10px] md:text-[11px] font-bold py-1 text-center shadow-sm z-10">
+                    Delivery Free!
+                  </div>
+
+                  <div className="flex items-center mt-1">
+                    <div className={`w-[18px] h-[18px] rounded-full border-2 flex items-center justify-center ${isSelected ? 'border-[#a855f7]' : 'border-neutral-300'}`}>
+                      {isSelected && <div className="w-[8px] h-[8px] rounded-full bg-[#a855f7]" />}
                     </div>
                   </div>
-                  <div className="w-12 h-12 md:w-16 md:h-16 flex-shrink-0 bg-white rounded-md flex items-center justify-center overflow-hidden border border-neutral-100 shadow-sm">
+                  <div className="w-14 h-14 md:w-16 md:h-16 flex-shrink-0 bg-white rounded flex items-center justify-center overflow-hidden border border-neutral-200">
                     <img src="/banner-img/product-banner.webp" alt="Product" className="w-full h-full object-cover" />
                   </div>
-                  <div className="flex-1">
-                    <div className={`text-[18px] md:text-[22px] font-bold leading-snug ${isSelected ? 'text-[#009e19]' : 'text-neutral-800'}`}>
+                  <div className="flex-1 pr-4">
+                    <div className="text-[15px] md:text-[17px] font-bold text-neutral-800 leading-snug mb-1">
                       {product.name}
                     </div>
-                  </div>
-                  <div className="text-right">
-                    <span className="font-extrabold text-[18px] md:text-[24px] text-neutral-900">{product.price}</span>
+                    <div className="text-[14px] text-neutral-500 mb-4">
+                      বিশেষ ডিসকাউন্ট অফার
+                    </div>
+                    <div className="flex items-center gap-3">
+                      {/* Real quantity selector */}
+                      <div className="flex items-center border border-neutral-300 rounded-sm bg-white">
+                        <button 
+                          onClick={(e) => { e.stopPropagation(); handleQuantityChange(product.id, -1); }}
+                          className="px-2.5 py-0.5 text-neutral-500 hover:bg-neutral-50 text-[16px] leading-tight"
+                        >-</button>
+                        <span className="px-3.5 py-0.5 border-x border-neutral-300 text-[14px] font-semibold text-neutral-700">
+                          {quantities[product.id] || 1}
+                        </span>
+                        <button 
+                          onClick={(e) => { e.stopPropagation(); handleQuantityChange(product.id, 1); }}
+                          className="px-2.5 py-0.5 text-neutral-500 hover:bg-neutral-50 text-[16px] leading-tight"
+                        >+</button>
+                      </div>
+                      <span className="font-extrabold text-[16px] md:text-[18px] text-neutral-900">{product.price}</span>
+                    </div>
                   </div>
                 </div>
               );
@@ -278,7 +307,7 @@ export default function CheckoutPage() {
                       <p className="text-[15px] font-bold text-neutral-800 leading-tight">
                         {selectedProductData.name.split(' ×')[0]}
                       </p>
-                      <p className="text-[13px] text-neutral-500 font-bold">Qty: 1</p>
+                      <p className="text-[13px] text-neutral-500 font-bold">Qty: {selectedProductQuantity}</p>
                     </div>
                     
                     <div className="text-right">
@@ -295,7 +324,7 @@ export default function CheckoutPage() {
                 <div className="flex justify-between items-center">
                   <span className="text-neutral-600 font-bold">Subtotal</span>
                   <div className="text-right">
-                    <span className="block font-bold text-neutral-900">{selectedProductData.price}</span>
+                    <span className="block font-bold text-neutral-900">{(selectedProductPrice * selectedProductQuantity).toLocaleString()}.00৳</span>
                   </div>
                 </div>
                 <div className="flex justify-between items-center">
@@ -334,7 +363,7 @@ export default function CheckoutPage() {
 
                 {/* bKash Payment */}
                 <div className="flex justify-between items-center pt-2">
-                  <label className="flex items-center gap-3 cursor-pointer text-base font-semibold text-neutral-800">
+                  {/* <label className="flex items-center gap-3 cursor-pointer text-base font-semibold text-neutral-800">
                     <input
                       type="radio"
                       name="payment_method"
@@ -343,12 +372,12 @@ export default function CheckoutPage() {
                       className="h-4 w-4 accent-orange-600 border-neutral-300 text-orange-600 focus:ring-0"
                     />
                     <span>bKash Payment Gateway</span>
-                  </label>
+                  </label> */}
                   {/* Mini bKash Logo Placeholder matching look */}
-                  <div className="flex items-center gap-1 font-bold text-[#d12053] italic text-sm">
+                  {/* <div className="flex items-center gap-1 font-bold text-[#d12053] italic text-sm">
                     <span>bKash</span>
                     <div className="w-4 h-4 bg-[#d12053] transform rotate-45 origin-center clip-path-logo inline-block ml-0.5" />
-                  </div>
+                  </div> */}
                 </div>
               </div>
 

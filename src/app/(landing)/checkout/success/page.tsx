@@ -9,6 +9,7 @@ function SuccessContent() {
   const orderId = searchParams.get('orderId') || '80850';
   const paymentMethod = searchParams.get('method') || 'COD';
   const productId = searchParams.get('product') || '3kg';
+  const quantity = parseInt(searchParams.get('qty') || '1', 10);
 
   const products = [
     { id: '1kg', name: '১ কেজি মিশরীয় মেডজুল খেজুর × 1', price: '1,650.00৳' },
@@ -20,7 +21,7 @@ function SuccessContent() {
   const selectedProductData = products.find(p => p.id === productId) || products[0];
   const selectedProductPrice = parseInt(selectedProductData.price.replace(/,/g, ''));
   const deliveryCharge = 130;
-  const totalPrice = selectedProductPrice + deliveryCharge;
+  const totalPrice = (selectedProductPrice * quantity) + deliveryCharge;
 
   return (
     <div className="py-12 md:py-20 text-[#222222] min-h-screen bg-white">
@@ -74,13 +75,13 @@ function SuccessContent() {
             </div>
             
             <div className="flex justify-between border-b border-dashed border-neutral-200 pb-4 mb-4">
-              <span className="pr-4">{selectedProductData.name.split(' ×')[0]} <strong className="text-neutral-900">× 1</strong></span>
+              <span className="pr-4">{selectedProductData.name.split(' ×')[0]} <strong className="text-neutral-900">× {quantity}</strong></span>
               <span className="font-bold text-neutral-900 whitespace-nowrap">{selectedProductData.price}</span>
             </div>
             
             <div className="flex justify-between border-b border-dashed border-neutral-200 pb-4 mb-4">
               <span className="font-bold text-neutral-800">Subtotal:</span>
-              <span className="font-bold text-neutral-900">{selectedProductData.price}</span>
+              <span className="font-bold text-neutral-900">{(selectedProductPrice * quantity).toLocaleString()}.00৳</span>
             </div>
             
             <div className="flex justify-between border-b border-dashed border-neutral-200 pb-4 mb-4">

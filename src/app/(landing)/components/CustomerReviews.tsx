@@ -95,7 +95,7 @@ export function CustomerReviews() {
                   className="flex-none px-3"
                   style={{ width: `${100 / itemsPerView}%` }}
                 >
-                  <div className="relative aspect-square w-full rounded-xl overflow-hidden shadow-sm">
+                  <div className="relative aspect-square w-full rounded-sm overflow-hidden shadow-sm">
                     <Image src={imgSrc} alt={`Customer Review ${index + 1}`} fill className="object-cover" />
                   </div>
                 </div>

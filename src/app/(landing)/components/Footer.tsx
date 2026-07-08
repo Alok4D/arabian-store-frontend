@@ -42,14 +42,7 @@ export function Footer() {
             
             {/* Logo area */}
             <div className="flex flex-col md:flex-row justify-center md:justify-start items-center gap-4 text-center md:text-left">
-              <div className="w-20 h-20 rounded-full border-[3px] border-[#8a9db0] flex items-center justify-center font-bold text-[10px] bg-white text-[#154360] relative overflow-hidden shadow-sm">
-                 <div className="absolute top-2 w-0 h-0 border-l-[12px] border-l-transparent border-r-[12px] border-r-transparent border-b-[20px] border-b-[#c07000]"></div>
-                 <div className="absolute top-8 text-[#154360] font-black leading-none">ARABIAN<br/>STORE</div>
-              </div>
-              <div>
-                <h2 className="text-[22px] font-black text-[#154360] tracking-wide mb-1">ARABIAN STORE BD</h2>
-                <p className="font-bold text-sm text-neutral-800">আরব পণ্যের সমাহার</p>
-              </div>
+             <img src="/Arabian-Store-Logo-Wide.webp" alt="Arabian Store" className="w-full md:w-auto h-16 md:h-20 object-contain" />
             </div>
 
             {/* Links area */}
@@ -63,13 +56,13 @@ export function Footer() {
             <div className="flex justify-center md:justify-end">
               <div className="w-full max-w-[340px] h-32 bg-white rounded-lg shadow-sm border border-neutral-200 overflow-hidden flex flex-col relative">
                  {/* Fake FB Banner */}
-                 <div className="h-20 bg-[#1e4a28] w-full flex items-center justify-center text-white/50 text-xs bg-[url('https://images.unsplash.com/photo-1596733430284-f7437764b1a9?auto=format&fit=crop&q=80&w=600')] bg-cover bg-center">
+                 <div className="h-20 bg-[#1e4a28] w-full flex items-center justify-center text-white/50 text-xs bg-[url('/702625471_1452288243581247_6964213978760610794_n.png')] bg-cover bg-center">
                    <div className="absolute top-2 right-2 text-white bg-blue-600 rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold">f</div>
                  </div>
                  {/* Fake FB Page Info */}
                  <div className="h-12 bg-white flex items-center px-4 gap-3 relative">
                     <div className="w-12 h-12 rounded-full border-[3px] border-white bg-white shadow-sm absolute -top-6 left-4 flex items-center justify-center text-[8px] font-bold overflow-hidden">
-                       <div className="w-full h-full bg-neutral-100 flex items-center justify-center text-[#154360]">LOGO</div>
+                       <img src="/471756009_1028734385936637_4350842613043007973_n.jpg" alt="Arabian Store" className="w-full h-full object-contain" />
                     </div>
                     <div className="ml-14 flex-1 mt-1">
                         <h4 className="font-bold text-black text-sm leading-tight hover:underline cursor-pointer">Arabian Store</h4>

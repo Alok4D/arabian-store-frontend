@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Hind_Siliguri } from 'next/font/google';
+import { Toaster } from '@/components/ui/sonner';
 import './globals.css';
 
 const hindSiliguri = Hind_Siliguri({ 
@@ -20,7 +21,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="bn">
-      <body className={hindSiliguri.className}>{children}</body>
+      <body className={hindSiliguri.className}>
+        {children}
+        <Toaster position="top-center" />
+      </body>
     </html>
   );
 }

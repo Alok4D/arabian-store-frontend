@@ -30,30 +30,12 @@ export default function Home() {
     setIsSubmitting(true);
     setMessage('');
 
-    try {
-      const response = await fetch('http://localhost:5000/api/orders', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          ...formData,
-          packageType: selectedPackage,
-        }),
-      });
-
-      const data = await response.json();
-      if (response.ok) {
-        setMessage('আপনার অর্ডারটি সফলভাবে সম্পন্ন হয়েছে! খুব শীঘ্রই আমরা যোগাযোগ করব।');
-        setFormData({ customerName: '', phoneNumber: '', fullAddress: '' });
-      } else {
-        setMessage('অর্ডার করতে সমস্যা হয়েছে। দয়া করে সঠিক তথ্য দিন।');
-      }
-    } catch (error) {
-      setMessage('সার্ভারে সমস্যা হচ্ছে, একটু পর আবার চেষ্টা করুন।');
-    } finally {
+    // Simulate API call for design phase
+    setTimeout(() => {
+      setMessage('আপনার অর্ডারটি সফলভাবে সম্পন্ন হয়েছে! খুব শীঘ্রই আমরা যোগাযোগ করব।');
+      setFormData({ customerName: '', phoneNumber: '', fullAddress: '' });
       setIsSubmitting(false);
-    }
+    }, 1500);
   };
 
   return (

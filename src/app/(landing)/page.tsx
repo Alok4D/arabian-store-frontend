@@ -2,7 +2,7 @@ import { Header } from './components/Header';
 import { Features } from './components/Features';
 import { ProductImage } from './components/ProductImage';
 import { PricingCards } from './components/PricingCards';
-import CheckoutPage from './components/CheckoutPage';
+import CheckoutPage from './checkout/components/CheckoutPage';
 import { CustomerReviews } from './components/CustomerReviews';
 import { Footer } from './components/Footer';
 import ProductLandingSection from './components/ProductLandingSection';

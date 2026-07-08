@@ -2,10 +2,13 @@
 
 import React, { useState } from 'react';
 import { Lock, ChevronDown, Square } from 'lucide-react';
+import Image from 'next/image';
+import Link from 'next/link';
 
 export default function CheckoutPage() {
   const [showLogin, setShowLogin] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState('3kg');
+  const [isOrderPlaced, setIsOrderPlaced] = useState(false);
 
   const products = [
     { id: '1kg', name: 'সুপার প্রিমিয়াম সুক্কারি রুতাব- ১ কেজি × 1', originalPrice: '1,240.00৳', price: '1,190.00৳' },
@@ -14,6 +17,106 @@ export default function CheckoutPage() {
     { id: 'combo1', name: '১ কেজি প্রিমিয়াম সুক্কারি রুতাব ও ৩০০ গ্রাম তাহিনা কম্বো × 1', originalPrice: '2,030.00৳', price: '1,790.00৳' },
     { id: 'combo2', name: '১ কেজি প্রিমিয়াম সুক্কারি রুতাব ও ২৫০ গ্রাম এরাবিয়ান গাহওয়া কম্বো × 1', originalPrice: '2,440.00৳', price: '2,190.00৳' },
   ];
+
+  if (isOrderPlaced) {
+    return (
+      <div className="py-12 md:py-20 text-[#222222] min-h-screen bg-[#f7f4f0]">
+        <div className="mx-auto max-w-3xl flex flex-col items-center px-4">
+          
+          {/* Logo */}
+          <div className="w-20 h-20 mb-8 rounded-full border border-neutral-300 shadow-sm bg-white overflow-hidden flex items-center justify-center p-2">
+            <img src="/Arabian-Store-Logo-Wide.webp" alt="Arabian Store" className="w-full h-full object-contain" />
+          </div>
+          
+          <h1 className="text-3xl md:text-[38px] font-bold mb-12 text-neutral-800">Thank you</h1>
+
+          <div className="w-full bg-white rounded-lg shadow-sm overflow-hidden p-6 md:p-8">
+            
+            {/* Order Meta */}
+            <div className="flex flex-col md:flex-row md:items-center gap-6 md:gap-12 pb-6 mb-8 mt-2">
+              <div>
+                <p className="text-[13px] text-neutral-500 font-bold mb-1.5">Order Date:</p>
+                <p className="text-[14px] font-medium text-neutral-800">July 8, 2026</p>
+              </div>
+              <div className="hidden md:block w-px h-10 bg-neutral-200"></div>
+              <div>
+                <p className="text-[13px] text-neutral-500 font-bold mb-1.5">Payment method:</p>
+                <p className="text-[14px] font-medium text-neutral-800">ক্যাশ অন ডেলিভারি</p>
+              </div>
+            </div>
+
+            {/* Order Details */}
+            <div className="border border-neutral-200 rounded-md mb-8">
+              <div className="bg-[#f8f9fa] border-b border-neutral-200 px-5 py-3.5 font-bold text-neutral-800 text-[15px]">
+                Order #80850
+              </div>
+              <div className="p-5">
+                
+                {/* Product Row */}
+                <div className="flex flex-col md:flex-row justify-between border-b border-neutral-200 pb-5 mb-5 gap-6">
+                  <div className="w-full md:w-3/4">
+                    {/* Placeholder for the combo product image */}
+                    <div className="w-full max-w-[280px] aspect-[4/3] bg-neutral-100 rounded-md mb-4 flex items-center justify-center text-neutral-400 text-sm overflow-hidden border border-neutral-200">
+                      <img src="/sukkari.webp" alt="Product" className="w-full h-full object-cover opacity-80" />
+                    </div>
+                    <p className="text-[13px] text-[#2b6cb0] font-medium hover:underline cursor-pointer">
+                      ১ কেজি প্রিমিয়াম সুক্কারি রুতাব ও ৩০০ গ্রাম তাহিনা কম্বো × 1
+                    </p>
+                  </div>
+                  <div className="w-full md:w-1/4 text-left md:text-right text-[13px] text-neutral-600 mt-1 md:mt-0 font-medium">
+                    1,790.00৳
+                  </div>
+                </div>
+
+                {/* Totals */}
+                <div className="space-y-3.5 text-[13px]">
+                  <div className="flex justify-between items-center">
+                    <span className="text-neutral-500 font-medium">Subtotal:</span>
+                    <span className="text-neutral-700 font-medium">1,790.00৳</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-neutral-500 font-medium">Shipping:</span>
+                    <span className="text-neutral-700 font-medium">130.00৳ <span className="text-[11px] text-neutral-400 ml-1 font-normal">via ডেলিভারি চার্জ</span></span>
+                  </div>
+                  <div className="flex justify-between items-center border-t border-neutral-200 pt-4 mt-2">
+                    <span className="text-neutral-500 font-bold">Total:</span>
+                    <span className="font-bold text-neutral-800 text-[15px]">1,920.00৳</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Customer Details */}
+            <div className="border border-neutral-200 rounded-md">
+              <div className="bg-[#f8f9fa] border-b border-neutral-200 px-5 py-3.5 font-bold text-neutral-800 text-[15px]">
+                Customer Details
+              </div>
+              <div className="p-5 text-[13px]">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-4">
+                  <div>
+                    <p className="text-neutral-500 font-bold mb-1.5">Email:</p>
+                    <p className="font-medium text-neutral-800">-</p>
+                  </div>
+                  <div>
+                    <p className="text-neutral-500 font-bold mb-1.5">Phone:</p>
+                    <p className="font-medium text-neutral-800">01719277951</p>
+                  </div>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6 border-t border-neutral-200 pt-5">
+                  <div className="col-span-1 md:col-span-2 flex flex-col md:flex-row md:items-center justify-between gap-2">
+                    <p className="text-neutral-500 font-bold">প্রবাস থেকে অর্ডার করতে হোয়াটসঅ্যাপ নাম্বার লিখুন:</p>
+                    <p className="font-medium text-neutral-800 text-left md:text-right">Qui distinctio ipsu</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    );
+  }
+
 
   return (
     <div className="px-4 py-8 md:px-12 lg:px-24 text-[#222222]">
@@ -307,7 +410,10 @@ export default function CheckoutPage() {
               </div>
 
               {/* Submit Button */}
-              <button className="w-full mt-4 bg-[#008000] hover:bg-[#006e00] text-white font-bold py-3.5 px-4 rounded transition-colors flex items-center justify-center gap-2 text-base shadow-sm">
+              <button 
+                onClick={() => setIsOrderPlaced(true)}
+                className="w-full mt-4 bg-[#008000] hover:bg-[#006e00] text-white font-bold py-3.5 px-4 rounded transition-colors flex items-center justify-center gap-2 text-base shadow-sm"
+              >
                 <Lock className="h-4 w-4 fill-current" />
                 <span>Place Order  3,430.00৳</span>
               </button>

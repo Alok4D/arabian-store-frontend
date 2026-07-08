@@ -156,17 +156,17 @@ export default function CheckoutPage() {
                   key={product.id} 
                   onClick={() => setSelectedProduct(product.id)}
                   className={`relative flex items-start gap-3 md:gap-4 p-4 md:p-5 cursor-pointer transition-all bg-white border rounded-md overflow-hidden ${
-                    isSelected ? 'border-purple-400 shadow-sm' : 'border-neutral-300'
+                    isSelected ? 'border-[#009e19] shadow-sm' : 'border-neutral-300'
                   }`}
                 >
                   {/* Delivery Free Ribbon */}
-                  <div className="absolute -right-[30px] top-[14px] w-[120px] transform rotate-45 bg-[#f05924] text-white text-[10px] md:text-[11px] font-bold py-1 text-center shadow-sm z-10">
+                  <div className="absolute right-[-35px] top-[15px] w-[140px] transform rotate-45 bg-[#f05924] text-white text-[12px] md:text-[13px] font-bold py-1 text-center shadow-sm z-10">
                     Delivery Free!
                   </div>
 
                   <div className="flex items-center mt-1">
-                    <div className={`w-[18px] h-[18px] rounded-full border-2 flex items-center justify-center ${isSelected ? 'border-[#a855f7]' : 'border-neutral-300'}`}>
-                      {isSelected && <div className="w-[8px] h-[8px] rounded-full bg-[#a855f7]" />}
+                    <div className={`w-[18px] h-[18px] rounded-full border-2 flex items-center justify-center ${isSelected ? 'border-[#009e19]' : 'border-neutral-300'}`}>
+                      {isSelected && <div className="w-[8px] h-[8px] rounded-full bg-[#009e19]" />}
                     </div>
                   </div>
                   <div className="w-14 h-14 md:w-16 md:h-16 flex-shrink-0 bg-white rounded flex items-center justify-center overflow-hidden border border-neutral-200">

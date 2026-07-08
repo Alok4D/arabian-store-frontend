@@ -1,4 +1,5 @@
-import CheckoutPage from './checkout/components/CheckoutPage';
+
+import CheckoutPage from './checkout/page';
 import { CustomerReviews } from './components/CustomerReviews';
 import { Footer } from './components/Footer';
 import ProductLandingSection from './components/ProductLandingSection';

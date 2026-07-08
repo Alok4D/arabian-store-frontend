@@ -9,6 +9,56 @@ export default function CheckoutPage() {
   const [showLogin, setShowLogin] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState('3kg');
   const [isOrderPlaced, setIsOrderPlaced] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [orderId, setOrderId] = useState('');
+
+  // Form State
+  const [fullName, setFullName] = useState('');
+  const [mobileNumber, setMobileNumber] = useState('');
+  const [whatsappNumber, setWhatsappNumber] = useState('');
+  const [district, setDistrict] = useState('Sherpur');
+  const [fullAddress, setFullAddress] = useState('');
+  const [paymentMethod, setPaymentMethod] = useState('COD');
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const handleSubmitOrder = async () => {
+    if (!fullName || !mobileNumber || !fullAddress) {
+      setErrorMessage('অনুগ্রহ করে নাম, মোবাইল নাম্বার এবং পূর্ণ ঠিকানা দিন।');
+      return;
+    }
+    setErrorMessage('');
+    setIsLoading(true);
+
+    try {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
+      const res = await fetch(`${apiUrl}/orders`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          customerName: fullName,
+          phoneNumber: mobileNumber,
+          whatsappNumber,
+          district,
+          fullAddress,
+          packageType: selectedProduct,
+          paymentMethod
+        })
+      });
+
+      const data = await res.json();
+      if (data.success) {
+        setOrderId(data.order.id.slice(0, 8));
+        setIsOrderPlaced(true);
+      } else {
+        setErrorMessage(data.message || 'অর্ডার করতে সমস্যা হয়েছে, আবার চেষ্টা করুন।');
+      }
+    } catch (error) {
+      console.error(error);
+      setErrorMessage('সার্ভারের সাথে কানেক্ট করা যাচ্ছে না।');
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const products = [
     { id: '1kg', name: 'সুপার প্রিমিয়াম সুক্কারি রুতাব- ১ কেজি × 1', originalPrice: '1,240.00৳', price: '1,190.00৳' },
@@ -36,19 +86,19 @@ export default function CheckoutPage() {
             <div className="flex flex-col md:flex-row md:items-center gap-6 md:gap-12 pb-6 mb-8 mt-2">
               <div>
                 <p className="text-[13px] text-neutral-500 font-bold mb-1.5">Order Date:</p>
-                <p className="text-[14px] font-medium text-neutral-800">July 8, 2026</p>
+                <p className="text-[14px] font-medium text-neutral-800">{new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</p>
               </div>
               <div className="hidden md:block w-px h-10 bg-neutral-200"></div>
               <div>
                 <p className="text-[13px] text-neutral-500 font-bold mb-1.5">Payment method:</p>
-                <p className="text-[14px] font-medium text-neutral-800">ক্যাশ অন ডেলিভারি</p>
+                <p className="text-[14px] font-medium text-neutral-800">{paymentMethod === 'COD' ? 'ক্যাশ অন ডেলিভারি' : 'bKash'}</p>
               </div>
             </div>
 
             {/* Order Details */}
             <div className="border border-neutral-200 rounded-md mb-8">
               <div className="bg-[#f8f9fa] border-b border-neutral-200 px-5 py-3.5 font-bold text-neutral-800 text-[15px]">
-                Order #80850
+                Order #{orderId || '80850'}
               </div>
               <div className="p-5">
                 
@@ -60,11 +110,11 @@ export default function CheckoutPage() {
                       <img src="/sukkari.webp" alt="Product" className="w-full h-full object-cover opacity-80" />
                     </div>
                     <p className="text-[13px] text-[#2b6cb0] font-medium hover:underline cursor-pointer">
-                      ১ কেজি প্রিমিয়াম সুক্কারি রুতাব ও ৩০০ গ্রাম তাহিনা কম্বো × 1
+                      {products.find(p => p.id === selectedProduct)?.name}
                     </p>
                   </div>
                   <div className="w-full md:w-1/4 text-left md:text-right text-[13px] text-neutral-600 mt-1 md:mt-0 font-medium">
-                    1,790.00৳
+                    {products.find(p => p.id === selectedProduct)?.price}
                   </div>
                 </div>
 
@@ -72,7 +122,7 @@ export default function CheckoutPage() {
                 <div className="space-y-3.5 text-[13px]">
                   <div className="flex justify-between items-center">
                     <span className="text-neutral-500 font-medium">Subtotal:</span>
-                    <span className="text-neutral-700 font-medium">1,790.00৳</span>
+                    <span className="text-neutral-700 font-medium">{products.find(p => p.id === selectedProduct)?.price}</span>
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-neutral-500 font-medium">Shipping:</span>
@@ -80,7 +130,9 @@ export default function CheckoutPage() {
                   </div>
                   <div className="flex justify-between items-center border-t border-neutral-200 pt-4 mt-2">
                     <span className="text-neutral-500 font-bold">Total:</span>
-                    <span className="font-bold text-neutral-800 text-[15px]">1,920.00৳</span>
+                    <span className="font-bold text-neutral-800 text-[15px]">
+                      {parseInt(products.find(p => p.id === selectedProduct)?.price.replace(/,/g, '') || '0') + 130}.00৳
+                    </span>
                   </div>
                 </div>
               </div>
@@ -94,18 +146,18 @@ export default function CheckoutPage() {
               <div className="p-5 text-[13px]">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-4">
                   <div>
-                    <p className="text-neutral-500 font-bold mb-1.5">Email:</p>
-                    <p className="font-medium text-neutral-800">-</p>
+                    <p className="text-neutral-500 font-bold mb-1.5">Name:</p>
+                    <p className="font-medium text-neutral-800">{fullName}</p>
                   </div>
                   <div>
                     <p className="text-neutral-500 font-bold mb-1.5">Phone:</p>
-                    <p className="font-medium text-neutral-800">01719277951</p>
+                    <p className="font-medium text-neutral-800">{mobileNumber}</p>
                   </div>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6 border-t border-neutral-200 pt-5">
                   <div className="col-span-1 md:col-span-2 flex flex-col md:flex-row md:items-center justify-between gap-2">
                     <p className="text-neutral-500 font-bold">প্রবাস থেকে অর্ডার করতে হোয়াটসঅ্যাপ নাম্বার লিখুন:</p>
-                    <p className="font-medium text-neutral-800 text-left md:text-right">Qui distinctio ipsu</p>
+                    <p className="font-medium text-neutral-800 text-left md:text-right">{whatsappNumber || '-'}</p>
                   </div>
                 </div>
               </div>
@@ -239,7 +291,8 @@ export default function CheckoutPage() {
                   </label>
                   <input
                     type="text"
-                    defaultValue="Aiko"
+                    value={fullName}
+                    onChange={(e) => setFullName(e.target.value)}
                     className="w-full rounded-md border border-neutral-300 px-3 py-2.5 text-base outline-none focus:border-neutral-500 transition-colors"
                   />
                 </div>
@@ -251,7 +304,8 @@ export default function CheckoutPage() {
                   </label>
                   <input
                     type="tel"
-                    defaultValue="01719277951"
+                    value={mobileNumber}
+                    onChange={(e) => setMobileNumber(e.target.value)}
                     className="w-full rounded-md border border-neutral-300 px-3 py-2.5 text-base outline-none focus:border-neutral-500 transition-colors"
                   />
                 </div>
@@ -263,6 +317,8 @@ export default function CheckoutPage() {
                   </label>
                   <input
                     type="text"
+                    value={whatsappNumber}
+                    onChange={(e) => setWhatsappNumber(e.target.value)}
                     placeholder="হোয়াটসঅ্যাপ নাম্বার লিখুন"
                     className="w-full rounded-md border border-neutral-300 px-3 py-2.5 text-base outline-none focus:border-neutral-500 transition-colors placeholder-neutral-400"
                   />
@@ -275,7 +331,8 @@ export default function CheckoutPage() {
                   </label>
                   <div className="relative">
                     <select
-                      defaultValue="Sherpur"
+                      value={district}
+                      onChange={(e) => setDistrict(e.target.value)}
                       className="w-full appearance-none rounded-md border border-neutral-300 px-3 py-2.5 text-base outline-none focus:border-neutral-500 transition-colors bg-white pr-10 text-neutral-700"
                     >
                       <option value="Sherpur">Sherpur</option>
@@ -293,7 +350,8 @@ export default function CheckoutPage() {
                   </label>
                   <input
                     type="text"
-                    defaultValue="332 South Green Fabien Extension"
+                    value={fullAddress}
+                    onChange={(e) => setFullAddress(e.target.value)}
                     className="w-full rounded-md border border-neutral-300 px-3 py-2.5 text-base outline-none focus:border-neutral-500 transition-colors"
                   />
                 </div>
@@ -379,7 +437,8 @@ export default function CheckoutPage() {
                     <input
                       type="radio"
                       name="payment_method"
-                      defaultChecked
+                      checked={paymentMethod === 'COD'}
+                      onChange={() => setPaymentMethod('COD')}
                       className="h-4 w-4 accent-orange-600 border-neutral-300 text-orange-600 focus:ring-0"
                     />
                     <span>ক্যাশ অন ডেলিভারি</span>
@@ -397,6 +456,8 @@ export default function CheckoutPage() {
                     <input
                       type="radio"
                       name="payment_method"
+                      checked={paymentMethod === 'BKASH'}
+                      onChange={() => setPaymentMethod('BKASH')}
                       className="h-4 w-4 accent-orange-600 border-neutral-300 text-orange-600 focus:ring-0"
                     />
                     <span>bKash Payment Gateway</span>
@@ -410,12 +471,18 @@ export default function CheckoutPage() {
               </div>
 
               {/* Submit Button */}
+              {errorMessage && (
+                <div className="mt-4 p-3 bg-red-50 text-red-600 text-sm font-medium rounded border border-red-200">
+                  {errorMessage}
+                </div>
+              )}
               <button 
-                onClick={() => setIsOrderPlaced(true)}
-                className="w-full mt-4 bg-[#008000] hover:bg-[#006e00] text-white font-bold py-3.5 px-4 rounded transition-colors flex items-center justify-center gap-2 text-base shadow-sm"
+                onClick={handleSubmitOrder}
+                disabled={isLoading}
+                className={`w-full mt-4 bg-[#008000] hover:bg-[#006e00] text-white font-bold py-3.5 px-4 rounded transition-colors flex items-center justify-center gap-2 text-base shadow-sm ${isLoading ? 'opacity-70 cursor-not-allowed' : ''}`}
               >
                 <Lock className="h-4 w-4 fill-current" />
-                <span>Place Order  3,430.00৳</span>
+                <span>{isLoading ? 'Processing...' : `Place Order ${parseInt(products.find(p => p.id === selectedProduct)?.price.replace(/,/g, '') || '0') + 130}.00৳`}</span>
               </button>
 
             </div>

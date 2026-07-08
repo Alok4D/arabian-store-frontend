@@ -68,10 +68,10 @@ export function CustomerReviews() {
     <div className="py-16 bg-[#E8FDF2] w-full mt-12 overflow-hidden">
       <div className="container mx-auto px-4 md:px-8 lg:px-0 max-w-7xl relative">
         <h2 
-          className="text-[28px] md:text-[36px] md:leading-[36px] font-bold text-center text-black mb-12"
+          className="text-[28px] md:text-[36px] md:leading-[36px] font-bold text-center text-black mb-10"
           style={{ fontFamily: "'Noto Serif Bengali', sans-serif" }}
         >
-          কাস্টমার রিভিউ
+          গ্রাহকদের অনুভূতি
         </h2>
         
         <div className="relative group">

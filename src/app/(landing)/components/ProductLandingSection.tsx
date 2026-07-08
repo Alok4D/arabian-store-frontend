@@ -97,7 +97,7 @@ export default function ProductLandingSection() {
 
           {/* Right Side: Showcase Product Image */}
           <div className="lg:col-span-6 flex items-center justify-center">
-           <img src="/banner-img/product-banner.webp" alt="Egyptian Medjool" className="w-full w-full h-auto object-contain drop-shadow-xs" />
+           <img src="/banner-img/product-banner.webp" alt="Egyptian Medjool" className="w-full h-auto object-contain drop-shadow-xs" />
           </div>
         </div>
 

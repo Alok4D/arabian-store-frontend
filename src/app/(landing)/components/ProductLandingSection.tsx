@@ -6,14 +6,14 @@ export default function ProductLandingSection() {
       <div className="mx-auto max-w-7xl space-y-8">
         
         {/* Top Header Banner */}
-        <div className="w-full bg-[#E3FEEA] border border-[#d2edd9] rounded-md py-6 text-center px-4 shadow-sm">
+        <div className="w-full bg-[#E3FEEA] border border-[#d2edd9] rounded-md py-4 md:py-6 text-center px-3 shadow-sm">
           <h1 
-            className="font-bold text-[#a46404] text-3xl md:text-[40px] md:leading-[60px]"
+            className="font-bold text-[#a46404] text-[22px] leading-[32px] md:text-[40px] md:leading-[60px] mb-1 md:mb-0"
           >
             নতুন সিজনের সুপার প্রিমিয়াম সুক্কারি রুতাব
           </h1>
           <p 
-            className="font-bold text-[#094166] text-xl md:text-[30px] md:leading-[60px]" 
+            className="font-bold text-[#094166] text-[18px] leading-[26px] md:text-[30px] md:leading-[60px]" 
             style={{ fontFamily: "'Boronomala', sans-serif" }}
           >
             খেজুরের জগতে সেরা স্বাদ ও মধুময় খেজুর!
@@ -24,11 +24,18 @@ export default function ProductLandingSection() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center mt-6">
           
           {/* Left Side: Features Lists */}
-          <div className="lg:col-span-6 space-y-8 lg:pr-4">
+          <div className="lg:col-span-6 space-y-6 md:space-y-8 lg:pr-4">
             
+            {/* Mobile CTA Button (Only visible on small screens) */}
+            <div className="flex justify-center md:hidden pt-2 pb-2">
+              <button className="bg-[#009e19] hover:bg-[#008a16] text-white font-bold text-[20px] px-10 py-2.5 rounded-md transition-all duration-200 shadow-md">
+                অর্ডার করুন
+              </button>
+            </div>
+
             {/* List 1: Product Features */}
             <div>
-              <h2 className="text-[28px] md:text-[36px] md:leading-[60px] font-bold text-[#a46404] mb-2">
+              <h2 className="text-[22px] leading-[32px] md:text-[36px] md:leading-[60px] font-bold text-[#a46404] mb-2 md:mb-2 text-center md:text-left">
                 সুক্কারি রুতাব খেজুরের বৈশিষ্ট্য!
               </h2>
               <ul className="space-y-3">
@@ -52,7 +59,7 @@ export default function ProductLandingSection() {
 
             {/* List 2: Why Choose Us */}
             <div>
-              <h2 className="text-[28px] md:text-[36px] md:leading-[60px] font-bold text-[#a46404] mb-2">
+              <h2 className="text-[22px] leading-[32px] md:text-[36px] md:leading-[60px] font-bold text-[#a46404] mb-2 md:mb-2 text-center md:text-left">
                 আমাদের রুতাব কেন সেরা?
               </h2>
               <ul className="space-y-3">
@@ -73,9 +80,9 @@ export default function ProductLandingSection() {
               </ul>
             </div>
 
-            {/* CTA Button */}
-            <div className="pt-4 flex justify-center md:justify-start">
-              <button className="bg-[#009e19] hover:bg-[#008a16] text-white font-medium text-2xl px-12 py-3 rounded-xs transition-all duration-200 transform hover:scale-105">
+            {/* Desktop CTA Button (Hidden on small screens) */}
+            <div className="hidden md:flex pt-4 justify-start">
+              <button className="bg-[#009e19] hover:bg-[#008a16] text-white font-medium text-2xl px-12 py-3 rounded-md transition-all duration-200 transform hover:scale-105">
                 অর্ডার করুন
               </button>
             </div>
@@ -91,25 +98,31 @@ export default function ProductLandingSection() {
         <div className="space-y-6 pt-4">
           
           {/* Row 1: 1KG & 2KG Packages */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
             {/* 1 KG Card */}
-            <div className="bg-[#f2fbf4] border border-[#d2edd9] rounded-md py-8 text-center px-4 shadow-sm text-[20px] md:text-[28px] md:leading-[42px] font-bold text-black" style={{ fontFamily: "'Boronomala', sans-serif" }}>
-              <span className="text-[#a46404]">১ কেজি</span> সুপার প্রিমিয়াম সুক্কারি রুতাব{' '}
-              <span className="text-[#ff0000] ml-1">১১৯০ টাকা</span>
+            <div className="bg-[#f2fbf4] border border-[#d2edd9] rounded-md py-6 md:py-8 text-center px-3 md:px-4 shadow-sm text-[18px] md:text-[28px] md:leading-[42px] font-bold text-black" style={{ fontFamily: "'Boronomala', sans-serif" }}>
+              <span className="block md:inline">
+                <span className="text-[#a46404]">১ কেজি</span> সুপার প্রিমিয়াম সুক্কারি রুতাব
+              </span>
+              <span className="text-[#ff0000] block md:inline md:ml-1 mt-1 md:mt-0">১১৯০ টাকা</span>
             </div>
 
             {/* 2 KG Card */}
-            <div className="bg-[#f2fbf4] border border-[#d2edd9] rounded-md py-8 text-center px-4 shadow-sm text-[20px] md:text-[28px] md:leading-[42px] font-bold text-black" style={{ fontFamily: "'Boronomala', sans-serif" }}>
-              <span className="text-[#a46404]">২ কেজি</span> সুপার প্রিমিয়াম সুক্কারি রুতাব{' '}
-              <span className="text-[#ff0000] ml-1">২২৯০ টাকা</span>
+            <div className="bg-[#f2fbf4] border border-[#d2edd9] rounded-md py-6 md:py-8 text-center px-3 md:px-4 shadow-sm text-[18px] md:text-[28px] md:leading-[42px] font-bold text-black" style={{ fontFamily: "'Boronomala', sans-serif" }}>
+              <span className="block md:inline">
+                <span className="text-[#a46404]">২ কেজি</span> সুপার প্রিমিয়াম সুক্কারি রুতাব
+              </span>
+              <span className="text-[#ff0000] block md:inline md:ml-1 mt-1 md:mt-0">২২৯০ টাকা</span>
             </div>
           </div>
 
           {/* Row 2: 3KG Featured/Stretched Card */}
-          <div className="w-full bg-[#f2fbf4] border border-[#d2edd9] rounded-md py-10 text-center px-4 shadow-sm">
-            <p className="text-[28px] md:text-[48px] md:leading-[72px] font-bold text-black" style={{ fontFamily: "'Boronomala', sans-serif" }}>
-              <span className="text-[#a46404]">৩ কেজি</span> সুপার প্রিমিয়াম সুক্কারি রুতাব{' '}
-              <span className="text-[#ff0000] ml-2">৩৩০০ টাকা</span>
+          <div className="w-full bg-[#f2fbf4] border border-[#d2edd9] rounded-md py-6 md:py-10 text-center px-3 md:px-4 shadow-sm">
+            <p className="text-[22px] md:text-[48px] md:leading-[72px] font-bold text-black" style={{ fontFamily: "'Boronomala', sans-serif" }}>
+              <span className="block md:inline">
+                <span className="text-[#a46404]">৩ কেজি</span> সুপার প্রিমিয়াম সুক্কারি রুতাব
+              </span>
+              <span className="text-[#ff0000] block md:inline md:ml-2 mt-1 md:mt-0">৩৩০০ টাকা</span>
             </p>
           </div>
 

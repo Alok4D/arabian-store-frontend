@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Hind_Siliguri } from 'next/font/google';
 import { Toaster } from '@/components/ui/sonner';
+import { FloatingContact } from './components/FloatingContact';
 import '../globals.css';
 
 const hindSiliguri = Hind_Siliguri({ 
@@ -23,6 +24,7 @@ export default function RootLayout({
     <html lang="bn">
       <body className={hindSiliguri.className}>
         {children}
+        {/* <FloatingContact /> */}
         <Toaster position="top-center" />
       </body>
     </html>
